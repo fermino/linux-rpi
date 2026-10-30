@@ -15,7 +15,13 @@ pkgdesc='Linux (Raspberry Pi fork)'
 arch=(aarch64)
 url='https://www.raspberrypi.com/'
 license=('GPL-2.0 WITH Linux-syscall-note')
-makedepends=(bc)
+makedepends=(
+    bc
+    dtc
+    perl
+    python
+    zstd
+)
 options=(!debug !strip)
 source=("https://github.com/raspberrypi/linux/archive/$_commit.tar.gz")
 sha256sums=('3cf12b5b61e3c7e58a59505cc51b26010a4aca423bf363fd871d9aadd5cadd19')
@@ -55,7 +61,7 @@ prepare() {
     scripts/config --enable CONFIG_TRANSPARENT_HUGEPAGE_ALWAYS
     scripts/config --enable CONFIG_HUGETLBFS
     scripts/config --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD
-    scripts/config --set-val CONFIG_ZSWAP_COMPRESSOR_DEFAULT "zstd"
+    scripts/config --set-str CONFIG_ZSWAP_COMPRESSOR_DEFAULT "zstd"
     scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
 
     scripts/config --enable CONFIG_KSM
@@ -69,7 +75,7 @@ build() {
     export KBUILD_BUILD_USER=$pkgbase
     export KBUILD_BUILD_HOST=archlinux
     export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})"
-    make dtbs Image.gz modules
+    make dtbs all modules
 }
 
 package_linux-rpi() {
@@ -85,6 +91,9 @@ package_linux-rpi() {
         'wireless-regdb: to set the correct wireless channels of your country'
     )
     provides=(
+        # RFC66: boot standardization and bootchain package
+        # https://gitlab.archlinux.org/archlinux/rfcs/-/merge_requests/66
+        kernel
         NTSYNC-MODULE
         WIREGUARD-MODULE
     )
@@ -95,7 +104,8 @@ package_linux-rpi() {
     echo "Installing boot image..."
     # systemd expects to find the kernel here to allow hibernation
     # https://github.com/systemd/systemd/commit/edda44605f06a41fb86b7ab8128dcf99161d2344
-    install -Dm644 "arch/$ARCH/boot/Image.gz" "$modulesdir/vmlinuz"
+    # Also the location kernel-install (RFC66) picks the kernel up from.
+    install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
 
     # Used by mkinitcpio to name the kernel
     install -Dm644 <(echo "$pkgbase") "$modulesdir/pkgbase"
@@ -118,6 +128,17 @@ package_linux-rpi() {
 
 package_linux-rpi-headers() {
     pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel"
+    depends=(
+        bc
+        binutils
+        glibc
+        libelf
+        libgcc
+        openssl
+        xxhash
+        zlib
+        zstd
+    )
     provides=(LINUX-HEADERS)
 
     cd "$srcdir/$_srcname"
@@ -194,7 +215,7 @@ package_linux-rpi-headers() {
     done < <(find "$builddir" -type f -perm -u+x ! -name vmlinux -print0)
 
     echo "Stripping vmlinux..."
-    strip -v $STRIP_STATIC "$builddir/vmlinux"
+    "${CROSS_COMPILE}strip" -v $STRIP_STATIC "$builddir/vmlinux"
 
     echo "Adding symlink..."
     mkdir -p "$pkgdir/usr/src"

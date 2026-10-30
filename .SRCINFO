@@ -1,25 +1,41 @@
-pkgbase = linux-rpi5
-	pkgdesc = Vendor kernel and modules for Raspberry Pi 5
+pkgbase = linux-rpi
+	pkgdesc = Linux (Raspberry Pi fork)
 	pkgver = 7.3.0
-	pkgrel = 2
+	pkgrel = 1
 	url = https://www.raspberrypi.com/
 	arch = aarch64
 	license = GPL-2.0 WITH Linux-syscall-note
 	makedepends = bc
-	makedepends = git
+	makedepends = dtc
+	makedepends = perl
+	makedepends = python
+	makedepends = zstd
 	options = !debug
 	options = !strip
-	source = linux-rpi::git+https://github.com/raspberrypi/linux#commit=3e14c429f6c0b8e10d5a2dad345e8a7011be6dfb
-	source = BCM4345C0.hcd::https://raw.githubusercontent.com/RPi-Distro/bluez-firmware/cdf61dc691a49ff01a124752bd04194907f0f9cd/debian/firmware/broadcom/BCM4345C0.hcd
-	source = config.txt
-	sha256sums = 8de703ce65c18ddcbd526dcf61e270bae47e048f242795dda367ca2c6219165c
-	sha256sums = 51c45e77ddad91a19e96dc8fb75295b2087c279940df2634b23baf71b6dea42c
-	sha256sums = 7672f8dcf1e326420f38a44a3116dd66b5e149d5124bc37e3a91db7cea7276f6
+	source = https://github.com/raspberrypi/linux/archive/3e14c429f6c0b8e10d5a2dad345e8a7011be6dfb.tar.gz
+	sha256sums = 3cf12b5b61e3c7e58a59505cc51b26010a4aca423bf363fd871d9aadd5cadd19
 
-pkgname = linux-rpi5
+pkgname = linux-rpi
+	depends = coreutils
+	depends = initramfs
+	depends = kmod
+	optdepends = linux-rpi-headers: headers and scripts for building modules
+	optdepends = linux-firmware: firmware images needed for some devices
+	optdepends = scx-scheds: to use sched-ext schedulers
+	optdepends = wireless-regdb: to set the correct wireless channels of your country
+	provides = kernel
+	provides = NTSYNC-MODULE
+	provides = WIREGUARD-MODULE
 
-pkgname = linux-rpi5-headers
-
-pkgname = linux-firmware-rpi5
-	depends = linux-firmware-broadcom
-	replaces = firmware-raspberrypi
+pkgname = linux-rpi-headers
+	pkgdesc = Headers and scripts for building modules for the Linux (Raspberry Pi fork) kernel
+	depends = bc
+	depends = binutils
+	depends = glibc
+	depends = libelf
+	depends = libgcc
+	depends = openssl
+	depends = xxhash
+	depends = zlib
+	depends = zstd
+	provides = LINUX-HEADERS
