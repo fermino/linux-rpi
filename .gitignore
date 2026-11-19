@@ -1,5 +1,6 @@
-*.patch
-pkg/
-src/
-*.tar.gz
-*.tar.xz
+*
+
+!.gitignore
+!.nvchecker.toml
+!.SRCINFO
+!PKGBUILD
