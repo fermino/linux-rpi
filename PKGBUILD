@@ -66,6 +66,9 @@ prepare() {
 
     scripts/config --enable CONFIG_KSM
 
+    # kexec, requires using TF-A armstub providing PSCI support
+    scripts/config --enable CONFIG_KEXEC_FILE
+
     scripts/config --refresh
 }
 
