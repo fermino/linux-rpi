@@ -66,6 +66,9 @@ prepare() {
 
     scripts/config --enable CONFIG_KSM
 
+    # kexec, only supported if using TF-A providing PSCI support
+    scripts/config --enable CONFIG_KEXEC_FILE
+
     scripts/config --refresh
 }
 
