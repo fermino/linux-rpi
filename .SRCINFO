@@ -1,6 +1,6 @@
 pkgbase = linux-rpi
 	pkgdesc = Linux (Raspberry Pi fork)
-	pkgver = 7.3.0
+	pkgver = 7.3.5
 	pkgrel = 1
 	url = https://www.raspberrypi.com/
 	arch = aarch64
@@ -12,8 +12,8 @@ pkgbase = linux-rpi
 	makedepends = zstd
 	options = !debug
 	options = !strip
-	source = https://github.com/raspberrypi/linux/archive/3e14c429f6c0b8e10d5a2dad345e8a7011be6dfb.tar.gz
-	sha256sums = 3cf12b5b61e3c7e58a59505cc51b26010a4aca423bf363fd871d9aadd5cadd19
+	source = https://github.com/raspberrypi/linux/archive/db232c0315ccb2341f2cc7acd17a1f6d454c155b.tar.gz
+	sha256sums = 9c6f596b0452bd58ff91c118256d3391097ed7ba63ce6204792e0dc06068c64c
 
 pkgname = linux-rpi
 	depends = coreutils

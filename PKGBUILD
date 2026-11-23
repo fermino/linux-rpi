@@ -7,9 +7,9 @@
 
 pkgbase=linux-rpi
 pkgname=(linux-rpi linux-rpi-headers)
-_commit=3e14c429f6c0b8e10d5a2dad345e8a7011be6dfb
+_commit=db232c0315ccb2341f2cc7acd17a1f6d454c155b
 _srcname="linux-$_commit"
-pkgver=7.3.0
+pkgver=7.3.5
 pkgrel=1
 pkgdesc='Linux (Raspberry Pi fork)'
 arch=(aarch64)
@@ -24,7 +24,7 @@ makedepends=(
 )
 options=(!debug !strip)
 source=("https://github.com/raspberrypi/linux/archive/$_commit.tar.gz")
-sha256sums=('3cf12b5b61e3c7e58a59505cc51b26010a4aca423bf363fd871d9aadd5cadd19')
+sha256sums=('9c6f596b0452bd58ff91c118256d3391097ed7ba63ce6204792e0dc06068c64c')
 
 # Used throughout the build, to avoid repeating
 export ARCH=arm64
