@@ -1,3 +1,8 @@
 [linux-rpi]
-source = "git"
-git = "https://github.com/raspberrypi/linux.git"
+source = "regex"
+# The tags are unrelated to the kernel version. Move this to the next rpi-X.Y.y branch along with
+# the package: newer branches carry -rc kernels until that series is released.
+url = "https://raw.githubusercontent.com/raspberrypi/linux/rpi-7.3.y/Makefile"
+regex = '(VERSION = \d+\nPATCHLEVEL = \d+\nSUBLEVEL = \d+)\nEXTRAVERSION =[ ]*\n'
+from_pattern = 'VERSION = (\d+)\sPATCHLEVEL = (\d+)\sSUBLEVEL = (\d+)'
+to_pattern = '\1.\2.\3'

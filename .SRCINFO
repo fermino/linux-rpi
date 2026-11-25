@@ -1,6 +1,6 @@
 pkgbase = linux-rpi
 	pkgdesc = Linux (Raspberry Pi fork)
-	pkgver = 7.3.5
+	pkgver = 7.3.6
 	pkgrel = 1
 	url = https://www.raspberrypi.com/
 	arch = aarch64
@@ -12,8 +12,8 @@ pkgbase = linux-rpi
 	makedepends = zstd
 	options = !debug
 	options = !strip
-	source = https://github.com/raspberrypi/linux/archive/db232c0315ccb2341f2cc7acd17a1f6d454c155b.tar.gz
-	sha256sums = 9c6f596b0452bd58ff91c118256d3391097ed7ba63ce6204792e0dc06068c64c
+	source = https://github.com/raspberrypi/linux/archive/99dc5c58063750a5cb675d9f15cd074036e2d72e.tar.gz
+	sha256sums = 95999513a6f83e34981b832b470bc5c5e6cb753049309300ec59e46612cc66dd
 
 pkgname = linux-rpi
 	depends = coreutils
@@ -22,6 +22,7 @@ pkgname = linux-rpi
 	optdepends = linux-rpi-headers: headers and scripts for building modules
 	optdepends = linux-firmware: firmware images needed for some devices
 	optdepends = scx-scheds: to use sched-ext schedulers
+	optdepends = trusted-firmware-a-rpi4: kexec support on the Raspberry Pi 4
 	optdepends = wireless-regdb: to set the correct wireless channels of your country
 	provides = kernel
 	provides = NTSYNC-MODULE
