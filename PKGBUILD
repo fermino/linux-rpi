@@ -91,6 +91,7 @@ package_linux-rpi() {
         "$pkgbase-headers: headers and scripts for building modules"
         'linux-firmware: firmware images needed for some devices'
         'scx-scheds: to use sched-ext schedulers'
+        'trusted-firmware-a-rpi4: PSCI and kexec support on the Raspberry Pi 4'
         'wireless-regdb: to set the correct wireless channels of your country'
     )
     provides=(
